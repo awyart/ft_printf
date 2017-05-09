@@ -6,34 +6,29 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 15:57:57 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/04 18:09:31 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/09 16:11:38 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <limits.h>
 
-static int	ft_put_long(long long value, int base, long long *nb)
+static int	ft_put_long(long long *value, int base)
 {
-	if (value < 0)
+	if (*value < 0)
 	{
-		*nb = -(long long)value;
+		*value = -(*value);
 		if (base == 10)
 			return (1);
 	}
-	else
-		*nb = (long long)value;
 	return (0);
 }
 
-char		*ft_itoab_ll(long long value, int base)
+static int	ft_put_size(long long value, int base)
 {
-	long long	nb;
-	int			neg;
-	int			size;
-	char		*str;
+	int size;
 
 	size = 0;
-	neg = ft_put_long(value, base, &nb);
 	if (value == 0)
 		size = 1;
 	else
@@ -42,13 +37,47 @@ char		*ft_itoab_ll(long long value, int base)
 			value = value / base;
 			size++;
 		}
+	return (size);
+}
+
+static char	*ft_handle_llmax(long long value, int size, int base)
+{
+	char *str;
+
+	str = ft_strnew(size);
+	str[size + 1] = '\0';
+	str[size] = "0123456789ABCDEF"[-(value % base)];
+	value = value / base;
+	value = -value;
+	while (--size >= 0)
+	{
+		str[size] = "0123456789ABCDEF"[value % base];
+		value /= base;
+	}
+	str[0] = '-';
+	return (str);
+}
+
+char		*ft_itoab_ll(long long value, int base)
+{
+	int			neg;
+	int			size;
+	char		*str;
+
+	size = ft_put_size(value, base);
+	if (value == LLONG_MIN)
+	{
+		str = ft_handle_llmax(value, size, base);
+		return (str);
+	}
+	neg = ft_put_long(&value, base);
 	size = size + neg;
-	str = (char*)malloc(sizeof(char) * (size + 1));
+	str = ft_strnew(size);
 	str[size] = '\0';
 	while (--size >= 0)
 	{
-		str[size] = "0123456789ABCDEF"[nb % base];
-		nb = nb / base;
+		str[size] = "0123456789ABCDEF"[value % base];
+		value = value / base;
 	}
 	if (neg)
 		str[0] = '-';

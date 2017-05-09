@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:04:53 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/04 14:41:59 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/09 19:58:23 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ void		put_s(t_flag *flag)
 
 	pstr = 0;
 	ft_form(flag);
-	if (!(flag->flags['-']))
+	if (flag->content == NULL && (flag->final_len += 6))
+		ft_putstr("(null)");
+	if (!(flag->flags['-'])
+		&& (flag->final_len += POPS(flag->width - flag->len)))
 		ft_putnchar(flag->width - flag->len, ' ');
 	i = -1;
-	while (++i < flag->len)
+	while (++i < flag->len && (flag->final_len += 1))
 		ft_putchar(flag->content[pstr++]);
-	if ((flag->flags['-']))
+	if ((flag->flags['-'])
+		&& (flag->final_len += POPS(flag->width - flag->len)))
 		ft_putnchar(flag->width - flag->len, ' ');
 }

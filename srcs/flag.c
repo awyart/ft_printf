@@ -6,36 +6,25 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 18:46:30 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/04 20:50:11 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/09 19:39:34 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static t_flag	*ft_newflag(int *test_error)
+static t_flag	*ft_newflag(void)
 {
 	t_flag	*flag;
 
 	if (!(flag = malloc(sizeof(t_flag))))
-	{
-		*test_error = 1;
-		ft_putstr("Error init malloc t_flag\n");
-		return (NULL);
-	}
+		exit(0);
 	if (!(flag->content = ft_strnew(43)))
-	{
-		*test_error = 1;
-		ft_putstr("Error init flag->content \n");
-		return (NULL);
-	}
+		exit(0);
 	if (!(flag->flags = ft_strnew(128 * sizeof(char))))
-	{
-		*test_error = 1;
-		ft_putstr("Error init flag->flags\n");
-		return (NULL);
-	}
+		exit(0);
 	flag->len = 0;
 	flag->flag_len = 0;
+	flag->final_len = 0;
 	flag->width = INT_MIN;
 	flag->precision = INT_MIN;
 	return (flag);
@@ -89,7 +78,7 @@ static void		ft_get_flags(t_flag *flag, char *test, char *str, int *i)
 		(flag->flags[(int)str[(*i)++]]) += 1;
 }
 
-t_flag			*ft_get_next(char *str, va_list ap, int *test_error)
+t_flag			*ft_get_next(char *str, va_list ap)
 {
 	t_flag	*flag;
 	int		i;
@@ -97,22 +86,18 @@ t_flag			*ft_get_next(char *str, va_list ap, int *test_error)
 
 	i = 1;
 	percent = 0;
-	if (!(flag = ft_newflag(test_error)))
-	{
-		*test_error = 1;
-		return (NULL);
-	}
+	if (!(flag = ft_newflag()))
+		exit(0);
 	if (ft_end_flag(str[i]))
 	{
-		ft_get_flags(flag, "+- 0", str, &i);
+		ft_get_flags(flag, FLAG1, str, &i);
 		ft_get_width(flag, ap, str, &i);
 		ft_get_precision(flag, ap, str, &i);
-		ft_get_flags(flag, "lhjzt", str, &i);
+		ft_get_flags(flag, FLAG2, str, &i);
 	}
-
 	flag->flag_len = i;
 	flag->flag_type = str[i];
-	if (!(ft_detect(flag, ap, test_error)))
-		*test_error = 1;
+	if (!(ft_detect(flag, ap)))
+		exit(0);
 	return (flag);
 }

@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/28 22:06:38 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/04 18:30:24 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/09 18:14:47 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,15 @@ int			ft_start(char *format, va_list ap)
 {
 	int		i;
 	t_flag	*flag;
-	int		test_error;
 	int		count;
 
 	i = -1;
-	test_error = 0;
 	count = 0;
 	while (format[++i] != '\0')
 		if (format[i] == '%')
 		{
-			flag = ft_get_next(format + i, ap, &test_error);
-			if (test_error == 1)
-			{
-				ft_putstr("Error get flags\n");
-				return (-1);
-			}
-			count = count + flag->len;
+			flag = ft_get_next(format + i, ap);
+			count = count + flag->final_len;
 			i = i + flag->flag_len;
 			free_flag(flag);
 		}

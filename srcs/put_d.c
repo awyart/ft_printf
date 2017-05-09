@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 16:06:04 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/04 17:14:03 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/09 19:56:08 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	ft_begin(t_flag *flag, int *sign, int *pstr)
 {
 	*pstr = 0;
-	if (flag->width == -2147483648)
+	if (flag->width == INT_MIN)
 		flag->width = 0;
 	if (flag->width < 0)
 	{
@@ -39,6 +39,15 @@ static void	ft_begin(t_flag *flag, int *sign, int *pstr)
 		*sign = 0;
 }
 
+static int	ft_manage_diese(t_flag *flag)
+{
+	if (flag->flag_type == 'x' || flag->flag_type == 'X')
+		if (flag->flags['#'] >= 1
+		&& !(ft_strlen(flag->content) > 0 && flag->content[0] == '0'))
+			return (1);
+	return (0);
+}
+
 static void	ft_form_str(t_flag *flag, int *n, int sign, int pstr)
 {
 	if (flag->precision < 0)
@@ -56,21 +65,28 @@ static void	ft_form_str(t_flag *flag, int *n, int sign, int pstr)
 
 static void	ft_manage_sign(t_flag *flag, int n, int sign)
 {
-	if (flag->flags['-'])
+	char str[2];
+
+	str[0] = '0';
+	str[1] = flag->flag_type;
+	if (ft_manage_diese(flag))
+		flag->width -= 2;
+	if (flag->flags['-'] || flag->flags['0'])
 	{
-		if (sign)
+		if (ft_manage_diese(flag) && (flag->final_len += 2))
+			ft_putstr(str);
+		if (sign && (flag->final_len += 1))
 			ft_putchar(sign);
-	}
-	else if (flag->flags['0'])
-	{
-		if (sign)
-			ft_putchar(sign);
-		ft_putnchar(flag->width - n, '0');
+		if (flag->flags['-'] && (flag->final_len += POPS(flag->width - n)))
+			ft_putnchar(flag->width - n, '0');
 	}
 	else
 	{
 		ft_putnchar(flag->width - n, ' ');
-		if (sign)
+		flag->final_len += POPS(flag->width - n);
+		if (ft_manage_diese(flag) && (flag->final_len += 2))
+			ft_putstr(str);
+		if (sign && (flag->final_len += 1))
 			ft_putchar(sign);
 	}
 }
@@ -81,14 +97,21 @@ void		put_d(t_flag *flag)
 	int i;
 	int pstr;
 	int n;
-	
+
 	ft_begin(flag, &sign, &pstr);
 	ft_form_str(flag, &n, sign, pstr);
 	ft_manage_sign(flag, n, sign);
 	ft_putnchar(flag->precision - flag->len, '0');
+	flag->final_len += POPS(flag->precision - flag->len);
 	i = -1;
 	while (++i < flag->len)
+	{
 		ft_putchar(flag->content[pstr++]);
+		flag->final_len++;
+	}
 	if (flag->flags['-'])
+	{
 		ft_putnchar(flag->width - n, ' ');
+		flag->final_len += POPS(flag->width - n);
+	}
 }

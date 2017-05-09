@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 16:34:30 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/04 17:45:12 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/09 19:43:53 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ static void	ft_begin(t_flag *flag, int *sign, int *pstr)
 		*sign = 0;
 }
 
+static int	ft_manage_diese(t_flag *flag)
+{
+	if (flag->flag_type == 'x' || flag->flag_type == 'X')
+		if (flag->flags['#'] >= 1
+		&& !(ft_strlen(flag->content) > 0 && flag->content[0] == '0'))
+			return (1);
+	return (0);
+}
+
 static void	ft_form_str(t_flag *flag, int *n, int sign, int pstr)
 {
 	if (flag->precision < 0)
@@ -56,22 +65,54 @@ static void	ft_form_str(t_flag *flag, int *n, int sign, int pstr)
 
 static void	ft_manage_sign(t_flag *flag, int n, int sign)
 {
+	char str[2];
+
+	str[0] = '0';
+	str[1] = flag->flag_type;
+	if (ft_manage_diese(flag))
+		flag->width -= 2;
 	if (flag->flags['-'])
 	{
+		if (ft_manage_diese(flag))
+		{
+			ft_putstr_unicode(str);
+			flag->final_len += 2;
+		}
 		if (sign)
+		{
 			ft_putchar_unicode(sign);
+			flag->final_len++;
+		}
 	}
 	else if (flag->flags['0'])
 	{
+		if (ft_manage_diese(flag))
+		{
+			ft_putstr_unicode(str);
+			flag->final_len += 2;
+		}
 		if (sign)
+		{
 			ft_putchar_unicode(sign);
+			flag->final_len++;
+		}
 		ft_putnchar_unicode(flag->width - n, '0');
+		flag->final_len += POPS(flag->width - n);
 	}
 	else
 	{
 		ft_putnchar_unicode(flag->width - n, ' ');
+		flag->final_len += POPS(flag->width - n);
+		if (ft_manage_diese(flag))
+		{
+			ft_putstr_unicode(str);
+			flag->final_len += 2;
+		}
 		if (sign)
+		{
 			ft_putchar_unicode(sign);
+			flag->final_len += 1;
+		}
 	}
 }
 
@@ -86,9 +127,16 @@ void		put_d_unicode(t_flag *flag)
 	ft_form_str(flag, &n, sign, pstr);
 	ft_manage_sign(flag, n, sign);
 	ft_putnchar_unicode(flag->precision - flag->len, '0');
+	flag->final_len += POPS(flag->precision - flag->len);
 	i = -1;
 	while (++i < flag->len)
+	{
 		ft_putchar_unicode(flag->content[pstr++]);
+		flag->final_len++;
+	}
 	if (flag->flags['-'])
+	{
 		ft_putnchar_unicode(flag->width - n, ' ');
+		flag->final_len += POPS(flag->width - n);
+	}
 }

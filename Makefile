@@ -6,7 +6,7 @@
 #    By: awyart <awyart@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/28 22:10:59 by awyart            #+#    #+#              #
-#    Updated: 2017/05/04 16:56:13 by awyart           ###   ########.fr        #
+#    Updated: 2017/05/09 15:22:44 by awyart           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,10 @@ SRC2 = utility/ft_bzero.c\
 	utility/ft_putnchar.c\
 	utility/ft_putnchar_unicode.c\
 	utility/ft_putstr.c\
+	utility/ft_putstr_unicode.c\
 	utility/ft_strchr.c\
+	utility/ft_strdup.c\
+	utility/ft_strjoin.c\
 	utility/ft_strdel.c\
 	utility/ft_strnew.c\
 	utility/ft_strlen.c

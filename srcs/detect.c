@@ -6,14 +6,14 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 18:45:16 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/04 16:20:48 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/09 19:39:39 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "detect.h"
 
-int		ft_detect(t_flag *flag, va_list ap, int *test_error)
+int		ft_detect(t_flag *flag, va_list ap)
 {
 	int		j;
 	t_next	*test;
@@ -24,12 +24,10 @@ int		ft_detect(t_flag *flag, va_list ap, int *test_error)
 	{
 		if (flag->flag_type == test[j].status[0])
 		{
-			test[j].f(flag, ap, test_error);
+			test[j].f(flag, ap);
 			return (1);
 		}
 	}
-	*test_error = 1;
-	ft_putstr("Error detection de flag\n");
 	return (0);
 }
 

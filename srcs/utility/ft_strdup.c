@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/11 10:49:33 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/09 14:52:27 by awyart           ###   ########.fr       */
+/*   Created: 2017/04/11 11:23:22 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/09 14:53:08 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
+char	*ft_strdup(const char *s1)
 {
-	size_t size;
+	char	*str;
+	int		i;
 
-	if (s == NULL)
+	i = 0;
+	if (s1 == NULL)
+		return (NULL);
+	if (!(str = (char*)malloc(sizeof(char) * (ft_strlen(s1) + 1))))
 		return (0);
-	size = 0;
-	while (s[size] != '\0')
+	while (s1[i] != '\0')
 	{
-		size++;
+		str[i] = s1[i];
+		i++;
 	}
-	return (size);
+	str[i] = '\0';
+	return (str);
 }
