@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 16:06:04 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/09 19:56:08 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/10 13:55:53 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	ft_manage_sign(t_flag *flag, int n, int sign)
 			ft_putstr(str);
 		if (sign && (flag->final_len += 1))
 			ft_putchar(sign);
-		if (flag->flags['-'] && (flag->final_len += POPS(flag->width - n)))
+		if (!(flag->flags['-']) && (flag->final_len += POPS(flag->width - n)))
 			ft_putnchar(flag->width - n, '0');
 	}
 	else

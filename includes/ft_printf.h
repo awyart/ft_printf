@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 15:37:22 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/09 19:54:50 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/10 17:38:09 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define FLAG2	"lhjzt."
 # define NB_OPTIONS	16
 # define POPS(value) ((value <= 0) ? 0 : value)
+# define ULL unsigned long long
+# define LL long long
 
 typedef struct	s_flag
 {
@@ -51,8 +53,9 @@ int				ft_count_arg(char *str);
 t_flag			*ft_get_next(char *str, va_list ap);
 int				ft_end_flag(char c);
 int				ft_isdigit(int c);
-char			*ft_itoab_ll(long long value, int base);
-char			*ft_itoab_ll_s(long long value, int base);
+char			*ft_itoa(long long value);
+char			*ft_itoab_ll(unsigned long long value, int base);
+char			*ft_itoab_ll_down(unsigned long long value, int base);
 void			ft_putchar(char c);
 void			ft_putchar_unicode(unsigned int c);
 void			ft_putnchar(int n, char c);

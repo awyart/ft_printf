@@ -1,46 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoab_ll.c                                      :+:      :+:    :+:   */
+/*   ft_itoab_ll_down.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/02 15:57:57 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/10 17:30:36 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/10 16:53:05 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/10 17:39:31 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <limits.h>
 
-static int	ft_put_size(unsigned long long value, int base)
+static void	ft_down(char *str)
 {
-	int size;
+	size_t	i;
 
-	size = 0;
-	if (value == 0)
-		size = 1;
-	else
-		while (value != 0)
+	i = 0;
+	while (str[i])
+	{
+		if ('A' <= str[i] && str[i] <= 'Z')
 		{
-			value = value / base;
-			size++;
+			str[i] += 32;
 		}
-	return (size);
+		i++;
+	}
 }
 
-char		*ft_itoab_ll(unsigned long long value, int base)
+char		*ft_itoab_ll_down(unsigned long long value, int base)
 {
-	int			size;
-	char		*str;
+	char *a;
 
-	size = ft_put_size(value, base);
-	str = ft_strnew(size);
-	str[size] = '\0';
-	while (--size >= 0)
-	{
-		str[size] = "0123456789ABCDEF"[value % base];
-		value = value / base;
-	}
-	return (str);
+	a = ft_itoab_ll(value, base);
+	ft_down(a);
+	return (a);
 }

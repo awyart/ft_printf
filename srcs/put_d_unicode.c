@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/02 16:34:30 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/09 19:43:53 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/10 17:40:52 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,48 +71,23 @@ static void	ft_manage_sign(t_flag *flag, int n, int sign)
 	str[1] = flag->flag_type;
 	if (ft_manage_diese(flag))
 		flag->width -= 2;
-	if (flag->flags['-'])
+	if (flag->flags['-'] || flag->flags['0'])
 	{
-		if (ft_manage_diese(flag))
-		{
+		if (ft_manage_diese(flag) && (flag->final_len += 2))
 			ft_putstr_unicode(str);
-			flag->final_len += 2;
-		}
-		if (sign)
-		{
+		if (sign && (flag->final_len += 1))
 			ft_putchar_unicode(sign);
-			flag->final_len++;
-		}
-	}
-	else if (flag->flags['0'])
-	{
-		if (ft_manage_diese(flag))
-		{
-			ft_putstr_unicode(str);
-			flag->final_len += 2;
-		}
-		if (sign)
-		{
-			ft_putchar_unicode(sign);
-			flag->final_len++;
-		}
-		ft_putnchar_unicode(flag->width - n, '0');
-		flag->final_len += POPS(flag->width - n);
+		if (!(flag->flags['-']) && (flag->final_len += POPS(flag->width - n)))
+			ft_putnchar_unicode(flag->width - n, '0');
 	}
 	else
 	{
 		ft_putnchar_unicode(flag->width - n, ' ');
 		flag->final_len += POPS(flag->width - n);
-		if (ft_manage_diese(flag))
-		{
+		if (ft_manage_diese(flag) && (flag->final_len += 2))
 			ft_putstr_unicode(str);
-			flag->final_len += 2;
-		}
-		if (sign)
-		{
+		if (sign && (flag->final_len += 1))
 			ft_putchar_unicode(sign);
-			flag->final_len += 1;
-		}
 	}
 }
 

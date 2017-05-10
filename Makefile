@@ -6,7 +6,7 @@
 #    By: awyart <awyart@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/28 22:10:59 by awyart            #+#    #+#              #
-#    Updated: 2017/05/09 15:22:44 by awyart           ###   ########.fr        #
+#    Updated: 2017/05/10 17:38:20 by awyart           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,9 @@ SRC1 = detect.c \
 
 SRC2 = utility/ft_bzero.c\
 	utility/ft_isdigit.c\
+	utility/ft_itoa.c\
 	utility/ft_itoab_ll.c\
-	utility/ft_itoab_ll_s.c\
+	utility/ft_itoab_ll_down.c\
 	utility/ft_putchar.c\
 	utility/ft_putchar_unicode.c\
 	utility/ft_putnchar.c\
