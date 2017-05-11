@@ -6,42 +6,48 @@
 #    By: awyart <awyart@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/28 22:10:59 by awyart            #+#    #+#              #
-#    Updated: 2017/05/10 17:38:20 by awyart           ###   ########.fr        #
+#    Updated: 2017/05/11 19:31:40 by awyart           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wextra -Wall -Werror
 NAME = libftprintf.a
-SRC1 = detect.c \
-	flag.c\
-	ft_printf.c\
-	next1.c\
-	next2.c\
-	next3.c\
-	next_bonus.c\
-	put_d.c\
-	put_d_unicode.c\
-	put_s.c\
-	put_s_unicode.c
+SRC1 = ft_printf.c\
+	get_info/get_info.c\
+	get_info/get_flag.c\
+	get_info/cv_s.c\
+	get_info/cv_d.c\
+	get_info/cv_dm.c\
+	get_info/cv_o.c\
+	get_info/cv_om.c\
+	get_info/cv_p.c\
+	get_info/cv_u.c\
+	get_info/cv_um.c\
+	get_info/cv_x.c\
+	get_info/cv_xm.c\
+	get_info/cv_c.c\
+	get_info/cv_cm.c\
+	get_info/cv_b.c\
+	print/print_format.c\
+	print/print_flag.c\
+	print/prt_cm.c\
+	print/prt_u.c\
+	print/prt_d.c\
+	print/prt_s.c\
+	print/prt_c.c\
+	print/prt_o.c\
+	print/prt_p.c\
+	print/prt_sm.c\
 
-SRC2 = utility/ft_bzero.c\
-	utility/ft_isdigit.c\
-	utility/ft_itoa.c\
-	utility/ft_itoab_ll.c\
-	utility/ft_itoab_ll_down.c\
-	utility/ft_putchar.c\
-	utility/ft_putchar_unicode.c\
+SRC2 = utility/ft_putchar.c\
 	utility/ft_putnchar.c\
-	utility/ft_putnchar_unicode.c\
 	utility/ft_putstr.c\
-	utility/ft_putstr_unicode.c\
-	utility/ft_strchr.c\
-	utility/ft_strdup.c\
 	utility/ft_strjoin.c\
-	utility/ft_strdel.c\
-	utility/ft_strnew.c\
-	utility/ft_strlen.c
+	utility/ft_strlen.c\
+	utility/ft_strchr.c\
+	utility/ft_itoab_ll.c\
+	utility/ft_down.c
 
 OBJ1 = $(patsubst %.c,%.o,$(SRC1))
 OBJ2 = $(patsubst utility/%.c,%.o,$(SRC2))
@@ -65,5 +71,5 @@ fclean : clean
 re : fclean $(NAME)
 
 test : $(SRC1) $(SRC2) main.c
-	@$(CC) $(CFLAGS) $^ -I $(IPATH)
+	@$(CC) $(CFLAGS) $^ -I $(IPATH) 
 	

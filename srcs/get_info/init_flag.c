@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   init_flag.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/10 21:24:39 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 16:36:52 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 17:57:33 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/11 18:32:23 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				ft_printf(char *format, ...)
+t_flag			*ft_init_flag(t_flag *flag, char c)
 {
-	va_list	*ap;
-	int		ret;
-	t_flag	*flag;
+	t_flag	*last;
+	int		i;
 
-	va_start(ap, format);
-	ft_get_info(format, ap, flag);
-	va_end(ap);
-	ret = ft_print_format(format, flag);
-	return (ret);
+	last = flag;
+	i = 0;
+	while (last)
+	{
+		if (c == last->flag_type)
+			i++;
+		last = last->next;
+	}
+	last = ft_newflag(void)
+	last->nb_type = i;
 }

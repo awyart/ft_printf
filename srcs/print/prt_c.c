@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   prt_c.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/10 21:24:39 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 16:36:52 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 15:43:01 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/11 19:26:36 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				ft_printf(char *format, ...)
+void					ft_c(t_flag *flag, int *count)
 {
-	va_list	*ap;
-	int		ret;
-	t_flag	*flag;
-
-	va_start(ap, format);
-	ft_get_info(format, ap, flag);
-	va_end(ap);
-	ret = ft_print_format(format, flag);
-	return (ret);
+	if (flag->width == INT_MIN)
+		flag->width = 0;
+	if (flag->width < 0)
+	{
+		flag->flags['-'] = 1;
+		flag->width = -(flag->width);
+	}
+	if (!(flag->flags['-']))
+	{
+		ft_putnchar(flag->width - 1, ' ');
+		*count += POPS(flag->width - 1);
+	}
+	ft_putchar(flag->content[0];
+	(*count)++;
+	if (flag->flags['-'])
+	{
+		ft_putnchar(flag->width - 1, ' ');
+		*count += POPS(flag->width - 1);
+	}
 }

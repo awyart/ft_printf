@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   get_content.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/10 21:24:39 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 16:36:52 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 17:43:49 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/11 18:37:19 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "convert.h"
 
-int				ft_printf(char *format, ...)
+int			ft_get_content(t_flag *flag, va_list ap)
 {
-	va_list	*ap;
-	int		ret;
-	t_flag	*flag;
+	int		j;
+	t_conv	*test;
 
-	va_start(ap, format);
-	ft_get_info(format, ap, flag);
-	va_end(ap);
-	ret = ft_print_format(format, flag);
-	return (ret);
+	test = g_conv;
+	j = -1;
+	while (++j < NB_OPTIONS)
+	{
+		if (flag->flag_type == test[j].status[0])
+		{
+			test[j].f(flag, ap);
+			return (1);
+		}
+	}
+	return (-1);
 }

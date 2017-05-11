@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag.c                                             :+:      :+:    :+:   */
+/*   get_flag.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/01 18:46:30 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/10 18:59:46 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 17:25:26 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/11 18:22:24 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static t_flag	*ft_newflag(void)
-{
-	t_flag	*flag;
-
-	if (!(flag = malloc(sizeof(t_flag))))
-		exit(0);
-	if (!(flag->content = ft_strnew(43)))
-		exit(0);
-	if (!(flag->flags = ft_strnew(128 * sizeof(char))))
-		exit(0);
-	flag->len = 0;
-	flag->flag_len = 0;
-	flag->final_len = 0;
-	flag->width = INT_MIN;
-	flag->precision = INT_MIN;
-	return (flag);
-}
 
 static void		ft_get_width(t_flag *flag, va_list ap, char *str, int *i)
 {
@@ -72,32 +54,33 @@ static void		ft_get_precision(t_flag *flag, va_list ap, char *str, int *i)
 	}
 }
 
-static void		ft_get_flags(t_flag *flag, char *test, char *str, int *i)
+static void		ft_get_modif(t_flag *flag, char *test, char *str, int *i)
 {
 	while (ft_strchr(test, str[*i]))
 		(flag->flags[(int)str[(*i)++]]) += 1;
 }
 
-t_flag			*ft_get_next(char *str, va_list ap)
+int				ft_get_flag(t_flag *flag, char *format, va_list ap)
 {
-	t_flag	*flag;
 	int		i;
-	int		percent;
+	t_flag	*w
 
+	i = 0;
+	while (format[++i])
+		if (ft_strchr(OPTIONS,format[i]))
+			break ;
+	if (format[i] == '\0')
+		return (-1);
+	wflag = ft_init_flag(wflag, format[i]);
 	i = 1;
-	percent = 0;
-	if (!(flag = ft_newflag()))
-		exit(0);
-	if (ft_end_flag(str[i]))
-	{
-		ft_get_flags(flag, FLAG1, str, &i);
-		ft_get_width(flag, ap, str, &i);
-		ft_get_precision(flag, ap, str, &i);
-		ft_get_flags(flag, FLAG2, str, &i);
-	}
-	flag->flag_len = i;
-	flag->flag_type = str[i];
-	if (!(ft_detect(flag, ap)))
-		exit(0);
-	return (flag);
+	ft_get_modif(wflag, FLAG1, format, &i);
+	ft_get_width(wflag, ap, format, &i);
+	ft_get_precision(wflag, ap, format, &i);
+	ft_get_modif(wflag, FLAG2, format, &i);
+	if (ft_strchr(OPTIONS, format[i]) == NULL)
+		return (-1);
+	wflag->flag_len = i;
+	wflag->flag_type = format[i];
+	ft_get_content(wflag, ap);
+	return (1);
 }

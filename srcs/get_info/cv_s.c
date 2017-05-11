@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   cv_s.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/10 21:24:39 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 16:36:52 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 18:38:56 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/11 18:41:11 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				ft_printf(char *format, ...)
+void	conv_s(t_flag *flag, va_list ap)
 {
-	va_list	*ap;
-	int		ret;
-	t_flag	*flag;
-
-	va_start(ap, format);
-	ft_get_info(format, ap, flag);
-	va_end(ap);
-	ret = ft_print_format(format, flag);
-	return (ret);
+	flag->content = va_arg(ap, char *);
+	flag->len = ft_strlen(flag->content);
 }

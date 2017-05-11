@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoab_ll_down.c                                 :+:      :+:    :+:   */
+/*   print_flag.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/10 16:53:05 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/10 17:39:31 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 14:47:24 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/11 17:36:39 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <limits.h>
 
-static void	ft_down(char *str)
+int				ft_print_flag(char *format, t_flag *flag, int *count)
 {
-	size_t	i;
+	char	type;
+	int		nb;
 
-	i = 0;
-	while (str[i])
+	nb = 0;
+	while (ft_strchr(OPTIONS, *format) == NULL)
 	{
-		if ('A' <= str[i] && str[i] <= 'Z')
+		if (*(format + 1) == '$')
 		{
-			str[i] += 32;
+			if (ft_isdigit(*format))
+				nb = *format - '0';
+			else
+				return (-1);
 		}
 		i++;
 	}
+	type = *format;
+	ft_putspe(flag, type, count, nb);
+	return (1);
 }
 
-char		*ft_itoab_ll_down(unsigned long long value, int base)
-{
-	char *a;
 
-	a = ft_itoab_ll(value, base);
-	ft_down(a);
-	return (a);
-}

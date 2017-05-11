@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   detect.c                                           :+:      :+:    :+:   */
+/*   prt_cm.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/11 14:49:32 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 15:34:48 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 15:43:03 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/11 16:26:59 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "detect.h"
 
-void		ft_putspe(t_flag *flag, char type, int *count, int nb)
+void					ft_cm(t_flag *flag, int *count)
 {
-	int		j;
-	t_next	*test;
-
-	test = g_ouch;
-	j = -1;
-	while (flag->flag_type != type && flag->nb_type != nb)
+	if (flag->width == INT_MIN)
+		flag->width = 0;
+	if (flag->width < 0)
 	{
-		flag = flag->next;
+		flag->flags['-'] = 1;
+		flag->width = -(flag->width);
 	}
-	while (++j < NB_OPTIONS)
+	if (!(flag->flags['-']))
 	{
-		if (type == test[j]->status[0])
-			test[j].f(flag, count);
+		ft_putnchar(flag->width - 1, ' ');
+		*count += POPS(flag->width - 1);
+	}
+	ft_putchar_unicode((char)va_arg(ap, int));
+	*(count)++;
+	if (flag->flags['-'])
+	{
+		ft_putnchar(flag->width - 1, ' ');
+		*count += POPS(flag->width - 1);
 	}
 }

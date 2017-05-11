@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_down.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/10 21:24:39 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 16:36:52 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 18:47:47 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/11 18:48:20 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				ft_printf(char *format, ...)
+void	ft_down(char *str)
 {
-	va_list	*ap;
-	int		ret;
-	t_flag	*flag;
+	size_t	i;
 
-	va_start(ap, format);
-	ft_get_info(format, ap, flag);
-	va_end(ap);
-	ret = ft_print_format(format, flag);
-	return (ret);
+	i = 0;
+	while (str[i])
+	{
+		if ('A' <= str[i] && str[i] <= 'Z')
+		{
+			str[i] += 32;
+		}
+		i++;
+	}
 }
