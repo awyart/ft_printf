@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 13:45:18 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/03 19:46:29 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/16 10:50:52 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ char	*ft_strchr(const char *s, int c)
 
 	sch = (char *)s;
 	i = 0;
-	size = ft_strlen(s);
+	size = 0;
+	while (s[size] != '\0')
+		size++;
 	if (c == 0)
 		return (sch + size);
 	while (sch[i] != c && sch[i] != '\0')

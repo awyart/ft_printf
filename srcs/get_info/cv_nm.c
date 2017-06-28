@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_format.c                                     :+:      :+:    :+:   */
+/*   cv_nm.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/11 14:18:33 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 15:33:33 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/17 15:54:27 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/23 11:08:15 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int						ft_print_format(char *format, t_flag *flag)
+void	assign_long(t_flag *flag, long *a)
 {
-	size_t	i;
-	size_t	count;
+	long *nb;
 
-	i = 1;
-	count = 0;
-	while (*format != '\0')
-	{
-		if (*format == '%')
-			if (*(format + 1) == '%')
-			{
-				ft_putchar('%');
-				i++;
-				count++;
-			}
-			else
-				ft_print_flag(format, flag, &count);
-		else
-			ft_putchar(*format);
-		format++;
-		count++;
-		i = 1;
-	}
-	return (count);
+	nb = a;
+	*nb = flag->count;
+}
+
+void	conv_nm(t_flag *flag, va_list *ap, char content[BUFF_SIZE])
+{
+	content[0] = 'n';
+	assign_long(flag, va_arg(*ap, long *));
 }

@@ -6,29 +6,33 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/11 19:09:50 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 19:15:06 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/16 17:01:37 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	conv_um(t_flag *flag, va_list ap)
+void	conv_um(t_flag *flag, va_list *ap, char content[BUFF_SIZE])
 {
+	flag->flags['+'] = 0;
+	flag->flags[' '] = 0;
 	if (flag->flags['l'] == 1)
-		flag->content = ft_itoab_ll((ULL)va_arg(ap, unsigned long), 10);
+		ft_itoab_ll((ULL)va_arg(*ap, unsigned long), 10, AH);
 	else if (flag->flags['l'] == 2)
-		flag->content = ft_itoab_ll((ULL)va_arg(ap, ULL), 10);
+		ft_itoab_ll((ULL)va_arg(*ap, ULL), 10, AH);
 	else if (flag->flags['h'] == 1)
-		flag->content = ft_itoab_ll((ULL)
-			(unsigned short)va_arg(ap, unsigned int), 10);
+		ft_itoab_ll((ULL)va_arg(*ap, unsigned long), 10, AH);
 	else if (flag->flags['h'] == 2)
-		flag->content = ft_itoab_ll((ULL)
-			(unsigned char)va_arg(ap, unsigned int), 10);
+		ft_itoab_ll((ULL)va_arg(*ap, unsigned long), 10, AH);
 	else if (flag->flags['j'] == 1)
-		flag->content = ft_itoab_ll((ULL)va_arg(ap, uintmax_t), 10);
+		ft_itoab_ll((ULL)va_arg(*ap, uintmax_t), 10, AH);
 	else if (flag->flags['z'] == 1)
-		flag->content = ft_itoab_ll((ULL)va_arg(ap, size_t), 10);
+		ft_itoab_ll((ULL)va_arg(*ap, size_t), 10, AH);
 	else
-		flag->content = ft_itoab_ll((ULL)va_arg(ap, unsigned long), 10);
-	flag->len = ft_strlen(flag->content);
+		ft_itoab_ll((ULL)va_arg(*ap, unsigned long), 10, AH);
+	if (AH[0] == '0' && AH[1] == 0 && (flag->flags['#'] || flag->precision)
+			&& (flag->flags['#'] = 0))
+		AH[0] = 0;
+	flag->len = ft_strlen(AH);
+	ft_u(flag, content);
 }

@@ -5,28 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/11 18:56:03 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 19:06:36 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/16 13:14:55 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/16 17:00:17 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	conv_dm(t_flag *flag, va_list ap)
+void	conv_dm(t_flag *flag, va_list *ap, char content[BUFF_SIZE])
 {
 	if (flag->flags['l'] == 1)
-		flag->content = ft_itoa((LL)va_arg(ap, long));
+		ft_itoa((LL)va_arg(*ap, long), AH);
 	else if (flag->flags['l'] == 2)
-		flag->content = ft_itoa(va_arg(ap, LL));
+		ft_itoa(va_arg(*ap, LL), AH);
 	else if (flag->flags['h'] == 1)
-		flag->content = ft_itoa((LL)(short)va_arg(ap, int));
+		ft_itoa((LL)va_arg(*ap, int), AH);
 	else if (flag->flags['h'] == 2)
-		flag->content = ft_itoa((LL)(char)va_arg(ap, int));
+		ft_itoa((LL)va_arg(*ap, int), AH);
 	else if (flag->flags['j'] == 1)
-		flag->content = ft_itoa((LL)va_arg(ap, intmax_t));
+		ft_itoa((LL)va_arg(*ap, intmax_t), AH);
 	else if (flag->flags['z'] == 1)
-		flag->content = ft_itoa((LL)va_arg(ap, size_t));
+		ft_itoa((LL)va_arg(*ap, size_t), AH);
 	else
-		flag->content = ft_itoa((LL)va_arg(ap, long));
-	flag->len = ft_strlen(flag->content);
+		ft_itoa((LL)va_arg(*ap, long), AH);
+	if (AH[0] == '0' && AH[1] == 0 && flag->precision != INT_MIN)
+		AH[0] = 0;
+	flag->len = ft_strlen(AH);
+	ft_d(flag, content);
 }

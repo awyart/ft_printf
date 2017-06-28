@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:45:47 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/03 19:46:39 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/17 18:28:35 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,12 @@
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
+}
+
+int		ft_pops(int c)
+{
+	if (c < 0)
+		return (0);
+	else
+		return (c);
 }

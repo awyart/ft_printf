@@ -1,15 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prt_sm.c                                           :+:      :+:    :+:   */
+/*   cv_per.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/11 15:37:23 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/11 15:47:54 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/11 18:49:56 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/17 19:30:20 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void					ft_sm(t_flag *flag, int *count);
+void	conv_per(t_flag *flag, va_list *ap, char content[BUFF_SIZE])
+{
+	AH[0] = '%';
+	(void)ap;
+	flag->len = 1;
+	ft_c(flag, '%');
+}

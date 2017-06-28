@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/10 16:49:06 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/10 17:39:49 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/16 13:17:55 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,8 @@ static int	ft_put_size(long long value)
 	return (size);
 }
 
-static char	*ft_handle_llmax(long long value, int size)
+static void	ft_handle_llmax(char *str, long long value, int size)
 {
-	char *str;
-
-	str = ft_strnew(size);
 	str[size + 1] = '\0';
 	str[size] = "0123456789"[-(value % 10)];
 	value = value / 10;
@@ -54,24 +51,21 @@ static char	*ft_handle_llmax(long long value, int size)
 		value /= 10;
 	}
 	str[0] = '-';
-	return (str);
 }
 
-char		*ft_itoa(long long value)
+void		ft_itoa(long long value, char str[BUFF_SIZE])
 {
 	int			neg;
 	int			size;
-	char		*str;
 
 	size = ft_put_size(value);
 	if (value == LLONG_MIN)
 	{
-		str = ft_handle_llmax(value, size);
-		return (str);
+		ft_handle_llmax(str, value, size);
+		return ;
 	}
 	neg = ft_put_long(&value);
 	size = size + neg;
-	str = ft_strnew(size);
 	str[size] = '\0';
 	while (--size >= 0)
 	{
@@ -80,5 +74,4 @@ char		*ft_itoa(long long value)
 	}
 	if (neg)
 		str[0] = '-';
-	return (str);
 }

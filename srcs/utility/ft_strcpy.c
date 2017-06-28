@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/11 14:29:51 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/04 14:52:00 by awyart           ###   ########.fr       */
+/*   Created: 2017/05/16 11:18:00 by awyart            #+#    #+#             */
+/*   Updated: 2017/05/16 11:18:31 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_bzero(void *s, size_t n)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	char	*sch;
-	size_t	i;
+	int i;
 
 	i = 0;
-	sch = (char*)s;
-	while (i < n)
+	while (src[i] != '\0')
 	{
-		sch[i] = '\0';
+		dst[i] = src[i];
 		i++;
 	}
+	dst[i] = '\0';
+	return (dst);
 }

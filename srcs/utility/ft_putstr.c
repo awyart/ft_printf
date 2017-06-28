@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 20:53:49 by awyart            #+#    #+#             */
-/*   Updated: 2017/05/03 19:46:31 by awyart           ###   ########.fr       */
+/*   Updated: 2017/05/16 10:49:59 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_putstr(char const *s)
 	if (!(s == NULL))
 		while (s[i] != '\0')
 		{
-			ft_putchar(s[i]);
+			write(1, &(s[i]), 1);
 			i++;
 		}
 }
